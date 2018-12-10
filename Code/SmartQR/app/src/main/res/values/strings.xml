@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SmartQR</string>
+    <string name="facebook_app_id">765337563827737</string>
+    <string name="fb_login_protocol_scheme">fb765337563827737</string>
+</resources>
