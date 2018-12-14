@@ -18,11 +18,14 @@ import static android.Manifest.permission.CAMERA;
 
 public class ScanQRActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
     private ZXingScannerView mScannerView;
-
+    String id="";
+    String email="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mScannerView = new ZXingScannerView(this);
+        id=getIntent().getStringExtra("id");
+        email=getIntent().getStringExtra("email");
         setContentView(mScannerView);
         if(checkPerissions()){
 
@@ -57,7 +60,7 @@ public class ScanQRActivity extends AppCompatActivity implements ZXingScannerVie
     @Override
     public void handleResult(Result rawResult) {
         Toast.makeText(this,rawResult.getText(),Toast.LENGTH_SHORT).show();
-        Intent redirect = new Intent(ScanQRActivity.this,ResultActivity.class).putExtra("result",rawResult.getText());
+        Intent redirect = new Intent(ScanQRActivity.this,ResultActivity.class).putExtra("result",rawResult.getText()).putExtra("id",id).putExtra("email",email);
         startActivity(redirect);
 
     }

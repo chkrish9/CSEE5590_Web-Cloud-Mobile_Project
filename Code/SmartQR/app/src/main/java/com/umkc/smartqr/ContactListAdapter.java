@@ -14,14 +14,14 @@ import java.util.Map;
 public class ContactListAdapter extends BaseAdapter {
     Context context;
     LayoutInflater layoutInflater;
-    List<UserDetailsModel> contacts;
-    ArrayList<UserDetailsModel> contactList;
+    List<String> contacts;
+    ArrayList<String> contactList;
 
-    ContactListAdapter(Context c, List<UserDetailsModel> contacts){
+    ContactListAdapter(Context c, List<String> contacts){
         this.context =c;
         this.contacts = contacts;
         this.layoutInflater = LayoutInflater.from(c);
-        this.contactList = new ArrayList<UserDetailsModel>();
+        this.contactList = new ArrayList<String>();
         this.contactList.addAll(contacts);
     }
 
@@ -44,9 +44,7 @@ public class ContactListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView = layoutInflater.inflate(R.layout.contactlist,null);
         TextView name = (TextView) convertView.findViewById(R.id.txtDisName);
-        TextView phone = (TextView) convertView.findViewById(R.id.txtDisPhone);
-        name.setText(((Map) contacts.get(position)).get("name").toString());
-        phone.setText(((Map) contacts.get(position)).get("phone").toString());
+        name.setText((contacts.get(position)).toString());
         return convertView;
     }
 }

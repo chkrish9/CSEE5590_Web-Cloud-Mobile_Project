@@ -7,7 +7,31 @@
     tools:context=".ResultActivity">
     <TextView
         android:id="@+id/txtOutput"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true"
         android:layout_height="wrap_content" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/txtOutput"
+        android:text="Save"
+        android:onClick="Save"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btnHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/colorGrey"
+        android:clickable="true"
+        android:onClick="home"
+        android:src="@drawable/home"
+        app:backgroundTint="@color/colorGrey"
+        tools:ignore="OnClick" />
 
 </RelativeLayout>

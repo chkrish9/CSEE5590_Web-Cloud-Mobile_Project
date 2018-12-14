@@ -21,7 +21,7 @@ import java.util.List;
 public class HomeActivity extends AppCompatActivity {
     String email="";
     String id="";
-    List<UserDetailsModel> contacts;
+    List<String> contacts;
     ContactListAdapter adapter;
     ListView listView;
     @Override
@@ -39,7 +39,7 @@ public class HomeActivity extends AppCompatActivity {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
             if (dataSnapshot.exists()) {
-                contacts = (ArrayList<UserDetailsModel>)dataSnapshot.child("contacts").getValue();
+                contacts = (ArrayList<String>)dataSnapshot.child("contacts").getValue();
                 adapter = new ContactListAdapter(HomeActivity.this,contacts);
                 listView.setAdapter(adapter);
             }

@@ -10,59 +10,38 @@
     android:paddingTop="5dp"
     tools:context=".UserDetails">
 
-    <TextView
-        android:id="@+id/lblUsername"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Name"/>
     <EditText
         android:id="@+id/txtName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/lblUsername" />
+        android:hint="Name" />
 
-    <TextView
-        android:id="@+id/lblPhone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtName"
-        android:layout_marginTop="10dp"
-        android:text="Phone"/>
     <EditText
         android:id="@+id/txtPhone"
         android:inputType="text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/lblPhone"/>
-
-    <TextView
-        android:id="@+id/lblEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtPhone"
+        android:hint="Phone"
         android:layout_marginTop="10dp"
-        android:text="Email"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtName"/>
+
     <EditText
         android:id="@+id/txtEmail"
         android:inputType="text"
+        android:hint="Email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/lblEmail"/>
-
-    <TextView
-        android:id="@+id/lblAddress"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtEmail"
         android:layout_marginTop="10dp"
-        android:text="Address"/>
+        android:layout_below="@+id/txtPhone"/>
+
     <EditText
         android:id="@+id/txtAddress"
         android:inputType="text"
+        android:hint="Address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/lblAddress"/>
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/txtEmail"/>
 
     <Button
         android:id='@+id/btnSave'
@@ -74,6 +53,25 @@
         android:textColor="@color/colorWhite"
         android:background="@color/colorGreen"
         android:onClick="save"/>
+    <Button
+        android:id='@+id/btnGenerateQR'
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnSave"
+        android:layout_centerHorizontal="true"
+        android:text="Generate QR"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/colorWhite"
+        android:background="@color/colorGreen"
+        android:onClick="generateQR"/>
+
+    <ImageView
+        android:id="@+id/qrView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/btnGenerateQR"
+        android:layout_centerHorizontal="true"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/btnHome"

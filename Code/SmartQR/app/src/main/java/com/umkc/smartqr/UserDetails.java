@@ -1,10 +1,12 @@
 package com.umkc.smartqr;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,6 +17,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,6 +35,7 @@ public class UserDetails extends AppCompatActivity {
     public TextView txtPhone;
     public TextView txtEmail;
     public TextView txtAddress;
+    private ImageView qrView;
     String email="";
     String id="";
     List<UserDetailsModel> contacts;
@@ -43,6 +51,7 @@ public class UserDetails extends AppCompatActivity {
         txtPhone = findViewById(R.id.txtPhone);
         txtEmail = findViewById(R.id.txtEmail);
         txtAddress = findViewById(R.id.txtAddress);
+        qrView = findViewById(R.id.qrView);
         userd = FirebaseDatabase.getInstance().getReference(id);
         Query query = FirebaseDatabase.getInstance().getReference(id);
         query.addListenerForSingleValueEvent(valueEventListener);
@@ -88,5 +97,26 @@ public class UserDetails extends AppCompatActivity {
     public void home(View view) {
         Intent redirect = new Intent(UserDetails.this,HomeActivity.class).putExtra("email",email).putExtra("id",id);
         startActivity(redirect);
+    }
+
+    public void generateQR(View view) {
+        String name = txtName.getText().toString();
+        String phone = txtPhone.getText().toString();
+        String email = txtEmail.getText().toString();
+        String address = txtAddress.getText().toString();
+        if (!name.isEmpty() && !phone.isEmpty()&& !email.isEmpty()&& !address.isEmpty()) {
+            String value = name+"\n"+phone+"\n"+email+"\n"+address;
+            MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+            try {
+                BitMatrix bitMatrix = multiFormatWriter.encode(value, BarcodeFormat.QR_CODE,300,300);
+                BarcodeEncoder barcodeEncoder =  new BarcodeEncoder();
+                Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
+                qrView.setImageBitmap(bitmap);
+            } catch (WriterException e) {
+                e.printStackTrace();
+            }
+        }else{
+            Toast.makeText(this, "Please fill all the details and save.", Toast.LENGTH_LONG).show();
+        }
     }
 }

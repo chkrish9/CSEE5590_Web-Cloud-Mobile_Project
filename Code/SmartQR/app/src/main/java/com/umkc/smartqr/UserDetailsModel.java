@@ -14,8 +14,8 @@ public class UserDetailsModel {
         this.id = id;
         this.name = name;
         this.phone = phone;
-        this.email = phone;
-        this.address = phone;
+        this.email = email;
+        this.address = address;
     }
 
     public String getId() {

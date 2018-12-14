@@ -15,12 +15,19 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.cloud.FirebaseVisionCloudDetectorOptions;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.text.FirebaseVisionText;
 import com.google.firebase.ml.vision.text.FirebaseVisionTextDetector;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -32,6 +39,8 @@ public class ScanCardActivity extends AppCompatActivity {
     private Bitmap imageBitmap;
     String email="";
     String id="";
+    public DatabaseReference userd;
+    List<String> contacts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +52,24 @@ public class ScanCardActivity extends AppCompatActivity {
         txtView = findViewById(R.id.txtView);
         email=getIntent().getStringExtra("email");
         id=getIntent().getStringExtra("id");
+        Query query = FirebaseDatabase.getInstance().getReference(id);
+        query.addListenerForSingleValueEvent(valueEventListener);
+        userd = FirebaseDatabase.getInstance().getReference(id);
     }
+
+    ValueEventListener valueEventListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            if (dataSnapshot.exists()) {
+                contacts = (ArrayList<String>) dataSnapshot.child("contacts").getValue();
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
 
     static final int CAMERA_REQ = 1;
 
@@ -87,7 +113,16 @@ public class ScanCardActivity extends AppCompatActivity {
             String txt = block.getText();
             txtView.setTextSize(24);
             txtView.setText(txt);
+            save(txt);
         }
+    }
+
+    public void save(String result) {
+        if(contacts == null){
+            contacts = new ArrayList<>();
+        }
+        contacts.add(result);
+        userd.child("contacts").setValue(contacts);
     }
 
     public void home(View view) {
