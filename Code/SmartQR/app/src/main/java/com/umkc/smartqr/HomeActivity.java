@@ -19,17 +19,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
-    String email="";
-    String id="";
+    String email = "";
+    String id = "";
     List<String> contacts;
     ContactListAdapter adapter;
     ListView listView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        email=getIntent().getStringExtra("email");
-        id=getIntent().getStringExtra("id");
+        email = getIntent().getStringExtra("email");
+        id = getIntent().getStringExtra("id");
         Query query = FirebaseDatabase.getInstance().getReference(id);
         query.addListenerForSingleValueEvent(valueEventListener);
         listView = findViewById(R.id.contactList);
@@ -39,9 +40,11 @@ public class HomeActivity extends AppCompatActivity {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
             if (dataSnapshot.exists()) {
-                contacts = (ArrayList<String>)dataSnapshot.child("contacts").getValue();
-                adapter = new ContactListAdapter(HomeActivity.this,contacts);
-                listView.setAdapter(adapter);
+                contacts = (ArrayList<String>) dataSnapshot.child("contacts").getValue();
+                if (contacts != null) {
+                    adapter = new ContactListAdapter(HomeActivity.this, contacts);
+                    listView.setAdapter(adapter);
+                }
             }
         }
 
@@ -52,27 +55,27 @@ public class HomeActivity extends AppCompatActivity {
     };
 
     public void scanQR(View view) {
-        Intent redirect = new Intent(HomeActivity.this,ScanQRActivity.class).putExtra("email",email).putExtra("id",id);
+        Intent redirect = new Intent(HomeActivity.this, ScanQRActivity.class).putExtra("email", email).putExtra("id", id);
         startActivity(redirect);
     }
 
     public void scanCard(View view) {
-        Intent redirect = new Intent(HomeActivity.this,ScanCardActivity.class).putExtra("email",email).putExtra("id",id);
+        Intent redirect = new Intent(HomeActivity.this, ScanCardActivity.class).putExtra("email", email).putExtra("id", id);
         startActivity(redirect);
     }
 
     public void generateQR(View view) {
-        Intent redirect = new Intent(HomeActivity.this,GenerateQRActivity.class).putExtra("email",email).putExtra("id",id);
+        Intent redirect = new Intent(HomeActivity.this, GenerateQRActivity.class).putExtra("email", email).putExtra("id", id);
         startActivity(redirect);
     }
 
     public void userDetails(View view) {
-        Intent redirect = new Intent(HomeActivity.this,UserDetails.class).putExtra("email",email).putExtra("id",id);
+        Intent redirect = new Intent(HomeActivity.this, UserDetails.class).putExtra("email", email).putExtra("id", id);
         startActivity(redirect);
     }
 
     public void logout(View view) {
-        Intent redirect = new Intent(HomeActivity.this,LoginActivity.class);
+        Intent redirect = new Intent(HomeActivity.this, LoginActivity.class);
         startActivity(redirect);
     }
 }
